@@ -1,0 +1,6 @@
+{
+  "sourceDirs": [
+    { "dir": "/home/rich/notes", "name":"Tech notes", "slug": "tech" },
+    { "dir": "/home/rich/Nextcloud/Artful Robot/Climate Outreach/docs", "name":"Climate Outreach (co)", "slug": "co" }
+  ]
+}
