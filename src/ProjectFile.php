@@ -78,7 +78,9 @@ class ProjectFile {
 
     $htmlPath = $this->getHtmlPath();
     $dir = dirname($htmlPath);
-    mkdir($dir, 0777, TRUE);
+    if (!file_exists($dir)) {
+      mkdir($dir, 0777, TRUE);
+    }
     file_put_contents($htmlPath, $html);
     // Crudely find the first h1.
     if (preg_match('@<h1>([^<]+)</h1>@s', $html, $matches)) {
