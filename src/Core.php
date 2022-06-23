@@ -14,7 +14,7 @@ class Core {
    *      slug: '',
    *      name: '',
    *      files: [
-   *        { mdPath: 'relative/path/to/file.md', title: 'h1 or other' },
+   *        { path: 'relative/path/to/file.md', title: 'h1 or other', htmlUrl: '/root/relative/url.html' },
    *        ...
    *      ]
    *    },
@@ -23,6 +23,8 @@ class Core {
    *
    */
   public array $index = [];
+
+  public array $projectSlugToConfig = [];
 
   public static function singleton() {
     if (!isset(static::$singleton)) {
@@ -34,6 +36,9 @@ class Core {
   public function __construct() {
 
     $this->config = json_decode(file_get_contents(SHELF_CONFIG_FILE), TRUE);
+    foreach ($this->config['sourceDirs'] as $sourceDir) {
+      $this->projectSlugToConfig[$sourceDir['slug']] = $sourceDir;
+    }
 
     if (file_exists(SHELF_DATA_DIR . '/index.serialized')) {
       $index = file_get_contents(SHELF_DATA_DIR . '/index.serialized');

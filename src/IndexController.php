@@ -8,15 +8,40 @@ class IndexController extends Controller {
 
     $this->scan($_GET['force'] ?? 0);
 
+    $search = trim(mb_strtolower($_GET['search'] ?? ''));
+    $searchValue = '';
+    if ($search) {
+      $search = preg_split('/\s+/', $search);
+      $searchValue = htmlspecialchars(implode(" ", $search));
+    }
+
     $html = '';
     foreach ($this->core->index as $indexedProject) {
       $html .= "<article><h2>" . htmlspecialchars($indexedProject['name']) . '</h2><ul>';
       foreach ($indexedProject['files'] as $indexedFile) {
-        $html .= "<li><a href='{$indexedFile['htmlUrl']}'>" . htmlspecialchars($indexedFile['title']) . "</a></li>\n";
+        $include = TRUE;
+
+        if ($search) {
+          // Only return the result if the file search matches.
+          $project = new Project($this->core, $this->core->projectSlugToConfig[$indexedProject['slug']]);
+          $file = new ProjectFile($project, $indexedFile['path'], TRUE);
+          if (!$file->matches($search)) $include = FALSE;
+        }
+        if ($include) {
+          $html .= "<li><a href='{$indexedFile['htmlUrl']}'>" . htmlspecialchars($indexedFile['title']) . "</a></li>\n";
+        }
       }
       $html .="</ul></article>\n";
     }
-    $html = '<div class="index-content"><h1>Shelf</h1><div class="projects">' . $html  . '</div></div>';
+    $html = <<<HTML
+      <div class="index-content">
+        <div class="shelf-index-header">
+          <h1>Shelf</h1>
+          <form method=get><input name=search value="$searchValue" /></form>
+        </div>
+        <div class="projects">$html</div>
+      </div>';
+      HTML;
 
     $this->renderPage($html);
   }

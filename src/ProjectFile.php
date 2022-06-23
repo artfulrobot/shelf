@@ -90,4 +90,13 @@ class ProjectFile {
       $this->title = substr($this->relPath, 1);
     }
   }
+  public function matches(array $needles) {
+    $src = mb_strtolower(file_get_contents($this->mdFilePath));
+    foreach ($needles as $needle) {
+      if (strpos($src, $needle) === FALSE) {
+        return FALSE;
+      }
+    }
+    return TRUE;
+  }
 }
