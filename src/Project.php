@@ -18,6 +18,15 @@ class Project {
   }
 
   /**
+   * From path like /slug/path/to/file (note lack of .extension)
+   */
+  public static function fromRelPath(Core $core, string $relPath) :Project {
+    $projectSlug = explode('/', $relPath)[1];
+    $project = new static($core, $core->projectSlugToConfig[$projectSlug]);
+    return $project;
+  }
+
+  /**
    * Recursively go through all the .md files in a project
    * creating HTML versions as needed, and updating the index.
    *

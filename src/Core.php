@@ -6,6 +6,18 @@ use \Parsedown;
 class Core {
   public static $singleton;
 
+  /**
+   * Like:
+   * {
+   *    sourceDirs: [
+   *      {
+   *        "dir": "/path/to/dir",
+   *        "name: "Human friendly project name",
+   *        "slug": "my_notes",
+   *      }, ...
+   *    ]
+   * }
+    */
   public array $config = [];
   /**
    * like:
@@ -24,6 +36,9 @@ class Core {
    */
   public array $index = [];
 
+  /**
+   * Copy of $config, indexed by projcet slug.
+    */
   public array $projectSlugToConfig = [];
 
   public static function singleton() {

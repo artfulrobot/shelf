@@ -11,6 +11,16 @@ class ProjectFile {
   public string $title;
 
   /**
+    */
+  public static function fromRelPath(Core $core, string $relativePath) {
+    if (preg_match('@^/([^/]+)(/.*?)(\.(?:md|html))$@', $relativePath, $matches)) {
+      $project = new Project($core, $core->projectSlugToConfig[$matches[1]]);
+      $file = new ProjectFile($project, $matches[2], TRUE);
+      return $file;
+    }
+    throw new \InvalidArgumentException("Cannot parse $relativePath");
+  }
+  /**
    * If $relativePath then $mdFilePath is like/this otherwise it is /home/user/project/like/this.md
    *
    */
