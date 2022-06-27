@@ -11,7 +11,9 @@ class PageController extends Controller {
     $path = $projectFile->getHtmlPath();
     if (file_exists($path)) {
       $html = file_get_contents($path);
-      $this->renderPage($html);
+      $this->renderPage($html, [
+        '{title}' => htmlspecialchars($projectFile->title),
+      ]);
       exit;
     }
     $this->renderPage('Error: ' . $path . ' does not exist');

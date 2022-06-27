@@ -16,9 +16,9 @@ abstract class Controller {
 
   abstract public function run();
 
-  public function renderPage(string $content) {
+  public function renderPage(string $content, array $substitutions = []) {
     $page = file_get_contents(SHELF_DATA_DIR . '/../page-template.html');
-    print strtr($page, [
+    print strtr($page, $substitutions + [
       '{content}' => $content,
     ]);
   }

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Shelf: {title}</title>
+    <title>📖 {title}</title>
     <style>
       body {
         font-family: Lato;
@@ -65,9 +65,64 @@
         color: #02477d;
         text-decoration: none;
       }
+    .shelf-index-header {
+      display: flex;
+      align-items: center;
+    }
+    .shelf-index-header h1 { flex: 1 0 auto; }
+    .shelf-index-header form { flex: 0 0 auto; }
+  a.clear-search {
+    display: inline-block;
+    padding: 0.25em 0.5em;
+    text-decoration: none;
+  }
+    .hidden { display: none; }
+    #hint { padding-right: 2ch; opacity: 0.8; }
+    kbd { border: solid 1px #eee; background: #fefefe; padding: 0 0.5ch; border-radius: 3px; }
+
     </style>
   </head>
   <body>
     <div class="content">{content}</div>
   </body>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let pageSearch = '<initial value>';
+      let isIndexPage = document.querySelector('.shelf-index-header');
+      let searchInput = document.querySelector('input[name="search"]');
+      let hint = document.querySelector('#hint');
+      if (isIndexPage) {
+        searchInput.addEventListener('input', updatePageSearch);
+        searchInput.focus();
+        items = document.querySelectorAll('ul.pages>li');
+        console.log({searchInput, items});
+        updatePageSearch();
+      }
+
+      function updatePageSearch() {
+        let updatedSearchText = searchInput.value.toLowerCase();
+        // noop, e.g. cursor keys.
+        if (updatedSearchText === pageSearch) return;
+        pageSearch = updatedSearchText;
+
+        if (pageSearch) {
+          console.log({pageSearch});
+          hint.classList.remove('hidden');
+        }
+        else {
+          hint.classList.add('hidden');
+        }
+
+        items.forEach(li => {
+          const matches = !!(pageSearch ? (li.textContent.toLocaleLowerCase().indexOf(pageSearch) > -1) : 1);
+          // console.log({li,matches, lc: li.textContent.toLocaleLowerCase(), matches});
+          if (li.matches !== matches) {
+            li.matches = matches;
+            if (matches) li.classList.remove('hidden');
+            else li.classList.add('hidden');
+          }
+        });
+      }
+    });
+  </script>
 </html>

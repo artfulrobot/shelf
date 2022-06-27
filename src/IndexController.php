@@ -17,7 +17,7 @@ class IndexController extends Controller {
 
     $html = '';
     foreach ($this->core->index as $indexedProject) {
-      $html .= "<article><h2>" . htmlspecialchars($indexedProject['name']) . '</h2><ul>';
+      $html .= "<article><h2>" . htmlspecialchars($indexedProject['name']) . '</h2><ul class="pages">';
       foreach ($indexedProject['files'] as $indexedFile) {
         $include = TRUE;
 
@@ -33,17 +33,21 @@ class IndexController extends Controller {
       }
       $html .="</ul></article>\n";
     }
+    $clearSearch = empty($searchValue) ? '' : '<a href=/ class="clear-search" >✖</a>';
+
     $html = <<<HTML
       <div class="index-content">
         <div class="shelf-index-header">
           <h1>Shelf</h1>
-          <form method=get><input name=search value="$searchValue" /></form>
+          <form method=get><div><span id=hint ><kbd>Enter</kbd> for full text search</span><input name=search value="$searchValue" /></div> $clearSearch</form>
         </div>
         <div class="projects">$html</div>
       </div>';
       HTML;
 
-    $this->renderPage($html);
+    $this->renderPage($html, [
+        '{title}' => htmlspecialchars('Shelf'),
+      ]);
   }
 
   public function scan($force) {
