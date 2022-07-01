@@ -15,6 +15,7 @@ class Project {
     $this->name = $sourceDir['name'];
     $this->dir = $sourceDir['dir'];
     $this->core = $core;
+    error_log("___ $this->slug $this->dir");
   }
 
   /**
@@ -68,10 +69,11 @@ class Project {
     }
     // Remove old files no longer present.
     $old = array_diff_key($files, $filesFound);
-    error_log(count($files) . " files found");
-    error_log(count($old) . " old files being removed");
+    error_log(count($files) . " files found ");
+    error_log(count($old) . " old files being removed:" . json_encode($old));
     foreach ($old as $oldFile) {
-      $projectFile = new ProjectFile($this, $oldFile, TRUE);
+      error_log("removing '$oldFile[path]'");
+      $projectFile = new ProjectFile($this, $oldFile['path'], TRUE);
       $htmlFile = $projectFile->getHtmlPath();
       if (file_exists($htmlFile)) {
         unlink($htmlFile);

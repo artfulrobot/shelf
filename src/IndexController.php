@@ -28,7 +28,6 @@ class IndexController extends Controller {
           if (!$file->matches($search)) $include = FALSE;
         }
         if ($include) {
-          error_log("including 2 " . $indexedFile['title']);
           $html .= "<li><a href='{$indexedFile['htmlUrl']}'>" . htmlspecialchars($indexedFile['title']) . "</a></li>\n";
         }
       }
@@ -55,9 +54,9 @@ class IndexController extends Controller {
 
     // Build index of files
     $valid = [];
-    foreach ($this->core->config['sourceDirs'] as $sourceDir) {
+    foreach ($this->core->projectSlugToConfig as $slug => $sourceDir) {
       $project = new Project($this->core, $sourceDir);
-      $valid[$project->slug] = 1;
+      $valid[$slug] = 1;
       $project->indexFiles($force);
     }
 

@@ -46,23 +46,21 @@
 
       .index-content {padding: 0 2rem;}
       .projects {
-        display: flex;
-        flex-direction: column;
-        flex-wrap:wrap;
-        align-items: flex-start;
-        gap: 1rem;
-        max-height: calc(100vh - 4rem);
+        columns: 4;
       }
       .index-content article {
-        flex: 0 0 auto;
         background: hsl(200, 29%, 93.9%);
         padding: 1rem;
+        margin-bottom: 1rem;
+        page-break-inside: avoid;
       }
       .index-content article h2 {
         margin-top: 0;
       }
       .index-content article ul {
         padding-left: 1rem;
+        max-height: calc(100vh - 8rem);
+        overflow: auto;
       }
       a:link, a:visited {
         color: #0284ea;
