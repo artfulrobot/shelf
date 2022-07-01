@@ -28,18 +28,19 @@ class IndexController extends Controller {
           if (!$file->matches($search)) $include = FALSE;
         }
         if ($include) {
+          error_log("including 2 " . $indexedFile['title']);
           $html .= "<li><a href='{$indexedFile['htmlUrl']}'>" . htmlspecialchars($indexedFile['title']) . "</a></li>\n";
         }
       }
       $html .="</ul></article>\n";
     }
-    $clearSearch = empty($searchValue) ? '' : '<a href=/ class="clear-search" >✖</a>';
+    $clearSearch = empty($searchValue) ? '' : ('Files containing <em>' . $searchValue . '</em>' . '<a href=/ class="clear-search" >Show all</a>');
 
     $html = <<<HTML
       <div class="index-content">
         <div class="shelf-index-header">
           <h1>Shelf</h1>
-          <form method=get><div><span id=hint ><kbd>Enter</kbd> for full text search</span><input name=search value="$searchValue" /></div> $clearSearch</form>
+          <form method=get><div><span id=hint ><kbd>Enter</kbd> for full text search</span><input name=search data-page-search="$searchValue" /></div> $clearSearch</form>
         </div>
         <div class="projects">$html</div>
       </div>';

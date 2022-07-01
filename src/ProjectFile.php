@@ -104,9 +104,11 @@ class ProjectFile {
     $src = mb_strtolower(file_get_contents($this->mdFilePath));
     foreach ($needles as $needle) {
       if (strpos($src, $needle) === FALSE) {
+        // error_log($this->mdFilePath . " does not contain '$needle'");
         return FALSE;
       }
     }
+    error_log($this->mdFilePath . " does contain '$needle'");
     return TRUE;
   }
 }
