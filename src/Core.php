@@ -50,6 +50,10 @@ class Core {
 
   public function __construct() {
 
+    // The config file contains a list of paths to search (inc. *) and optionally specifies slugs and names.
+    // We search these paths to construct the projectSlugToConfig arary, which
+    // contains keys dir (the calculated one if a wildcard was used), the slug
+    // and name.
     $this->config = json_decode(file_get_contents(SHELF_CONFIG_FILE), TRUE);
     foreach ($this->config['sourceDirs'] as $sourceDir) {
 
@@ -67,7 +71,7 @@ class Core {
             throw new \InvalidArgumentException("Config error: pattern $re from $sourceDir[dir]");
           }
           $slug = $matches[1];
-          error_log($slug . ':' . $dir);
+          // error_log($slug . ':' . $dir);
           $this->projectSlugToConfig[$slug] = [
             'dir' => rtrim($dir, '/'),
             'slug' => $slug,
@@ -80,6 +84,9 @@ class Core {
       }
     }
 
+    // Load the index. See structure above.
+    // The index should contain data for each file found within each project.
+    // It is kept in sync by the IndexController
     if (file_exists(SHELF_DATA_DIR . '/index.serialized')) {
       $index = file_get_contents(SHELF_DATA_DIR . '/index.serialized');
       $index = $index ? unserialize($index) : NULL;

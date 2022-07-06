@@ -9,6 +9,8 @@
         font-family: Lato;
         margin: 0;
         padding: 0;
+        line-height: 1.5;
+        color: #112;
       }
       ul { padding-left: 1rem; }
       li { margin-bottom: 0.5rem; }
@@ -49,18 +51,26 @@
         columns: 4;
       }
       .index-content article {
-        background: hsl(200, 29%, 93.9%);
+        background: hsl(40, 6%, 95.9%);
         padding: 1rem;
         margin-bottom: 1rem;
         page-break-inside: avoid;
+        border-radius: 6px;
       }
       .index-content article h2 {
         margin-top: 0;
       }
-      .index-content article ul {
-        padding-left: 1rem;
+      .index-content article div.pages {
         max-height: calc(100vh - 8rem);
         overflow: auto;
+      }
+      .index-content article ul {
+        padding-left: 1rem;
+      }
+      .subdir {
+        font-weight: bold;
+        opacity: 0.6;
+        border-bottom: solid 1px rgba(0,0,0,0.3);
       }
       a:link, a:visited {
         color: #0284ea;
@@ -99,7 +109,7 @@
       if (isIndexPage) {
         searchInput.addEventListener('input', updatePageSearch);
         searchInput.focus();
-        items = document.querySelectorAll('ul.pages>li');
+        items = document.querySelectorAll('div.pages li');
         console.log({searchInput, items});
         updatePageSearch();
       }

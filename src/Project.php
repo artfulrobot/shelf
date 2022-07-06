@@ -85,6 +85,16 @@ class Project {
     uasort($this->core->index[$this->slug]['files'], function ($a, $b) {
       if ($a['path'] === '/index' && $b['path'] !== '/index') return -1;
       if ($a['path'] !== '/index' && $b['path'] === '/index') return 1;
+
+      // Sort by dir.
+      $aDirs = array_slice(explode('/', $a['path']), 1);
+      $bDirs = array_slice(explode('/', $b['path']), 1);
+
+      // if b has more parts than a, it goes below. And vice-versa.
+      if (count($bDirs) > count($aDirs)) return -1;
+      if (count($aDirs) > count($bDirs)) return 1;
+
+      // Both a and b have the same number of parts, e.g. /subdir/one, /subdir/two, or /subdir/one, /otherdir/two
       return $a['path'] <=> $b['path'];
     });
 

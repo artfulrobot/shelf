@@ -17,7 +17,8 @@ class IndexController extends Controller {
 
     $html = '';
     foreach ($this->core->index as $indexedProject) {
-      $html .= "<article><h2>" . htmlspecialchars($indexedProject['name']) . '</h2><ul class="pages">';
+      $html .= "<article><h2>" . htmlspecialchars($indexedProject['name']) . '</h2><div  class="pages"><ul>';
+      $lastSubDir = '<none>';
       foreach ($indexedProject['files'] as $indexedFile) {
         $include = TRUE;
 
@@ -28,10 +29,18 @@ class IndexController extends Controller {
           if (!$file->matches($search)) $include = FALSE;
         }
         if ($include) {
-          $html .= "<li><a href='{$indexedFile['htmlUrl']}'>" . htmlspecialchars($indexedFile['title']) . "</a></li>\n";
+          preg_match(';^/(.*/)?(.*)$;', $indexedFile['path'], $matches);
+          $subDir = $matches[1] ? '<div class="subdir">' . htmlspecialchars($matches[1]) . '</div>' : '';
+          if ($subDir && $subDir !== $lastSubDir) {
+            $html .= '</ul>' . $subDir . '<ul>';
+            $lastSubDir = $subDir;
+          }
+          $html .= "<li><a href='{$indexedFile['htmlUrl']}'>"
+            . htmlspecialchars($indexedFile['title'])
+            . "</a></li>\n";
         }
       }
-      $html .="</ul></article>\n";
+      $html .="</ul></div></article>\n";
     }
     $clearSearch = empty($searchValue) ? '' : ('Files containing <em>' . $searchValue . '</em>' . '<a href=/ class="clear-search" >Show all</a>');
 
@@ -50,6 +59,9 @@ class IndexController extends Controller {
       ]);
   }
 
+  /**
+   * Update the index with all the .md files from each project.
+   */
   public function scan($force) {
 
     // Build index of files
