@@ -47,8 +47,17 @@
       .main-content { max-width: 70ch; margin: 0 auto; }
 
       .index-content {padding: 0 2rem;}
-      .projects {
-        columns: 4;
+      @media screen and (min-width: 600px) {
+        .projects { columns: 2; }
+      }
+      @media screen and (min-width: 900px) {
+        .projects { columns: 3; }
+      }
+      @media screen and (min-width: 1200px) {
+        .projects { columns: 4; }
+      }
+      @media screen and (min-width: 1500px) {
+        .projects { columns: 5; }
       }
       .index-content article {
         background: hsl(40, 6%, 95.9%);
@@ -61,7 +70,7 @@
         margin-top: 0;
       }
       .index-content article div.pages {
-        max-height: calc(100vh - 8rem);
+        max-height: calc(100vh - 13rem);
         overflow: auto;
       }
       .index-content article ul {
