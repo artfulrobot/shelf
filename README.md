@@ -17,6 +17,7 @@ Edit `shelf.json`. e.g.:
   "sourceDirs": [
     { "dir": "/home/rich/notes", "name":"Tech notes", "slug": "tech" },
     { "dir": "/home/rich/myciviextensions/*/docs/"}
+  ]
 }
 ```
 
