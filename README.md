@@ -1,30 +1,11 @@
-# Shelf
+# Give Up GitHub
 
-- Provides a local web page that shows all your .md files across different projects.
+This project has given up GitHub.  ([See Software Freedom Conservancy's *Give Up  GitHub* site for details](https://GiveUpGitHub.org).)
 
-- Searchable (instant search on titles, hit enter for full text search).
+You can now find this project at [codeberg](https://codeberg.org/artfulrobot/shelf) instead.
 
-- Always up-to-date. The HTML is re-rendered any time you update your.md file.
+Any use of this project's code by GitHub Copilot, past or present, is done without our permission.  We do not consent to GitHub's use of this project's code in Copilot.
 
-![screencast](screencast.gif)
+Join us; you can [give up GitHub](https://GiveUpGitHub.org) too!
 
-## Configuration
-
-Edit `shelf.json`. e.g.:
-
-```json
-{
-  "sourceDirs": [
-    { "dir": "/home/rich/notes", "name":"Tech notes", "slug": "tech" },
-    { "dir": "/home/rich/myciviextensions/*/docs/"}
-  ]
-}
-```
-
-Each entry in sourceDirs specifies the directory that contains .md files. All subdirs of that dir will be searched. The dir may include glob patterns, here the 2nd entry will look in all my extensions' docs/ dirs.
-
-## Running
-
-Run by going to the 'app' dir and running `php -S localhost:8123 router.php`
-
-Or adapt and install the systemd service included.
+![Logo of the GiveUpGitHub campaign](https://sfconservancy.org/img/GiveUpGitHub.png)

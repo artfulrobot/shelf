@@ -1,7 +1,0 @@
-{
-  "sourceDirs": [
-    { "dir": "/home/rich/notes", "name":"Tech notes", "slug": "tech" },
-    { "dir": "/home/rich/Nextcloud/Artful Robot/*/docs"},
-    { "dir": "/home/rich/civicrm-buildkit-docker/build/current/web/sites/default/files/civicrm/ext/*/docs/" }
-  ]
-}
